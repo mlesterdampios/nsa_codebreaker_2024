@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Viewer</title>
+    <style>
+        #container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+        #markdown {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        #buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+        }
+    </style>
+    <!-- Correct CDN link for marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Load JSON data as a script -->
+    <script src="./gagpt_catalogue.js"></script>
+</head>
+<body>
+    <div id="container">
+        <h2>JSON Viewer</h2>
+        <h3 id="prompt"></h3>
+        <div id="markdown"></div>
+        <div id="buttons">
+            <button onclick="previousObject()">Previous</button>
+            <button onclick="nextObject()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let data = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Assign the loaded JSON data to the variable
+            data = jsonData;
+            displayObject(currentIndex);
+        });
+
+        // Display the current object
+        function displayObject(index) {
+            const obj = data[index];
+            const promptText = obj.body.prompt;
+            const fulfillmentText = obj.body.fulfillment[0].text;
+
+            document.getElementById('prompt').textContent = promptText;
+            document.getElementById('markdown').innerHTML = marked.parse(fulfillmentText);
+        }
+
+        // Navigate to the next object
+        function nextObject() {
+            if (currentIndex < data.length - 1) {
+                currentIndex++;
+                displayObject(currentIndex);
+            }
+        }
+
+        // Navigate to the previous object
+        function previousObject() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                displayObject(currentIndex);
+            }
+        }
+    </script>
+</body>
+</html>
