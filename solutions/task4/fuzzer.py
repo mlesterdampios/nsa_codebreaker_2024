@@ -30,7 +30,7 @@ def sanitize_filename(query, max_length=255):
 
 # Function to make a request and save response as JSON
 def make_request_and_save(query, client, save_location):
-    url = f"https://34.195.208.56/?q={quote(query)}"
+    url = f"https://[REDACTED]/?q={quote(query)}"
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
